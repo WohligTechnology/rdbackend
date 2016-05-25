@@ -54,5 +54,18 @@ $return[$row->id]=$row->name;
 }
 return $return;
 }
+
+public function getAllSectors()
+{
+  $query = $this->db->query("SELECT `id`, `name`, `description` FROM `rdbackend_sector` WHERE 1")->result();
+  return $query;
+}
+public function getSector($id)
+{
+  $query = $this->db->query("SELECT `id`, `name`, `description` FROM `rdbackend_sector` WHERE `id`=$id")->row();
+  $query->project = $this->db->query("SELECT `id`, `title`, `image`, `description`, `order`, `sector` FROM `rdbackend_project` WHERE `sector`=$query->id ORDER BY `order` ASC")->result();
+  $query->services = $this->db->query("SELECT `id`, `name`, `description`, `order`, `sector` FROM `rdbackend_services` WHERE `sector`=$query->id ORDER BY `order` ASC")->result();
+  return $query;
+}
 }
 ?>

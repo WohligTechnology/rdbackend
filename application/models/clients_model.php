@@ -59,5 +59,11 @@ $return[$row->id]=$row->name;
 }
 return $return;
 }
+
+public function getClients()
+{
+  $query = $this->db->query("SELECT `name`, `logo`, `order`, `title`, `id` FROM `rdbackend_clients` WHERE 1 ORDER BY `order`")->result();
+  return $query;
+}
 }
 ?>

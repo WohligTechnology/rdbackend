@@ -1,5 +1,5 @@
 <?php if ( ! defined("BASEPATH")) exit("No direct script access allowed");
-class Json extends CI_Controller 
+class Json extends CI_Controller
 {function getallsector()
 {
 $elements=array();
@@ -229,4 +229,21 @@ $id=$this->input->get_post("id");
 $data["message"]=$this->clients_model->getsingleclients($id);
 $this->load->view("json",$data);
 }
+public function getClients()
+{
+  $data["message"]=$this->clients_model->getClients();
+  $this->load->view("json",$data);
+}
+public function getAllSectors()
+{
+  $data["message"]=$this->sector_model->getAllSectors();
+  $this->load->view("json",$data);
+}
+public function getSector()
+{
+  $id=$this->input->get_post("id");
+  $data["message"]=$this->sector_model->getSector($id);
+  $this->load->view("json",$data);
+}
+
 } ?>
