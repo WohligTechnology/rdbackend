@@ -720,7 +720,7 @@ $elements[4]->sort="1";
 $elements[4]->header="order";
 $elements[4]->alias="order";
 $elements[5]=new stdClass();
-$elements[5]->field="`rdbackend_project`.`sector`";
+$elements[5]->field="`rdbackend_sector`.`name`";
 $elements[5]->sort="1";
 $elements[5]->header="sector";
 $elements[5]->alias="sector";
@@ -738,7 +738,7 @@ if($orderby=="")
 $orderby="id";
 $orderorder="ASC";
 }
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `rdbackend_project`");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `rdbackend_project` INNER JOIN `rdbackend_sector` ON `rdbackend_project`.`sector`=`rdbackend_sector`.`id`");
 $this->load->view("json",$data);
 }
 
@@ -943,7 +943,7 @@ $elements[3]->sort="1";
 $elements[3]->header="order";
 $elements[3]->alias="order";
 $elements[4]=new stdClass();
-$elements[4]->field="`rdbackend_services`.`sector`";
+$elements[4]->field="`rdbackend_sector`.`name`";
 $elements[4]->sort="1";
 $elements[4]->header="sector";
 $elements[4]->alias="sector";
@@ -961,7 +961,7 @@ if($orderby=="")
 $orderby="id";
 $orderorder="ASC";
 }
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `rdbackend_services`");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `rdbackend_services` INNER JOIN `rdbackend_sector` ON `rdbackend_services`.`sector`=`rdbackend_sector`.`id`");
 $this->load->view("json",$data);
 }
 
