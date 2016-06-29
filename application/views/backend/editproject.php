@@ -9,8 +9,8 @@
 
 <div class="row">
            <div class="input-field col s12 m8">
-               <?php echo form_dropdown('sector', $sector, set_value('sector',$before->sector)); ?>
-                <label>Sector</label>
+               <?php echo form_dropdown('sector', $sector, set_value('sector',$before->service)); ?>
+                <label>service</label>
            </div>
        </div>
 <div class="row">
@@ -19,7 +19,7 @@
 <input type="text" id="title" name="title" value='<?php echo set_value('title',$before->title);?>'>
 </div>
 </div>
-<div class="row">
+<!-- <div class="row">
    <div class="file-field input-field col m6 s12">
      <span class="img-center big">
                                    <?php if($before->image == "") { } else {
@@ -34,9 +34,9 @@
        <input class="file-path validate" type="text" placeholder="Upload one or more files" value="<?php echo set_value('image',$before->image);?>">
      </div>
    </div>
-   <!-- <span style=" display: block;
- ">700px X 450px</span> -->
- </div>
+   <span style=" display: block;
+ ">700px X 450px</span>
+ </div> -->
 <div class="row">
 <div class="col s12 m6">
 <label>description</label>

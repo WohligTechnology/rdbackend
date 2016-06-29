@@ -6,7 +6,7 @@
   <div class="row">
              <div class="input-field col s12 m8">
                  <?php echo form_dropdown('sector', $sector, set_value('sector')); ?>
-                  <label>Sector</label>
+                  <label>Service</label>
              </div>
          </div>
 <div class="row">
@@ -15,7 +15,7 @@
 <input type="text" id="title" name="title" value='<?php echo set_value('title');?>'>
 </div>
 </div>
-<div class="row">
+<!-- <div class="row">
 <div class="file-field input-field col s12 m6">
 <div class="btn blue darken-4">
 <span>image</span>
@@ -27,7 +27,7 @@
 </div>
 <span style=" display: block;
 padding-top: 30px;"></span>
-</div>
+</div> -->
 <div class="row"><label>description</label>
 <div class="input-field col s12">
 <textarea id="some-textarea" name="description" class="materialize-textarea" length="400"><?php echo set_value( 'description');?></textarea>

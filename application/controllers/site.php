@@ -720,10 +720,10 @@ $elements[4]->sort="1";
 $elements[4]->header="order";
 $elements[4]->alias="order";
 $elements[5]=new stdClass();
-$elements[5]->field="`rdbackend_sector`.`name`";
+$elements[5]->field="`rdbackend_services`.`name`";
 $elements[5]->sort="1";
-$elements[5]->header="sector";
-$elements[5]->alias="sector";
+$elements[5]->header="service";
+$elements[5]->alias="service";
 $search=$this->input->get_post("search");
 $pageno=$this->input->get_post("pageno");
 $orderby=$this->input->get_post("orderby");
@@ -738,7 +738,7 @@ if($orderby=="")
 $orderby="id";
 $orderorder="ASC";
 }
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `rdbackend_project` INNER JOIN `rdbackend_sector` ON `rdbackend_project`.`sector`=`rdbackend_sector`.`id`");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `rdbackend_project` INNER JOIN `rdbackend_services` ON `rdbackend_project`.`services`=`rdbackend_services`.`id`");
 $this->load->view("json",$data);
 }
 
@@ -747,7 +747,7 @@ public function createproject()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createproject";
-$data['sector']=$this->sector_model->getsectordropdown();
+$data['sector']=$this->services_model->getservicesdropdown();
 $data["title"]="Create project";
 $this->load->view("template",$data);
 }
@@ -759,7 +759,7 @@ $this->form_validation->set_rules("title","title","trim");
 $this->form_validation->set_rules("image","image","trim");
 $this->form_validation->set_rules("description","description","trim");
 $this->form_validation->set_rules("order","order","trim");
-$this->form_validation->set_rules("sector","sector","trim");
+$this->form_validation->set_rules("services","sector","trim");
 if($this->form_validation->run()==FALSE)
 {
 $data["alerterror"]=validation_errors();
@@ -822,10 +822,15 @@ public function editproject()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editproject";
-$data['sector']=$this->sector_model->getsectordropdown();
+$data["page2"]="block/productblock";
+$data["before1"]=$this->input->get('id');
+$data["before2"]=$this->input->get('id');
+$data['sector']=$this->services_model->getservicesdropdown();
 $data["title"]="Edit project";
 $data["before"]=$this->project_model->beforeedit($this->input->get("id"));
-$this->load->view("template",$data);
+// $this->load->view("template",$data);
+$this->load->view("templatewith2",$data);
+
 }
 public function editprojectsubmit()
 {
@@ -1270,6 +1275,247 @@ $this->checkaccess($access);
 $this->clients_model->delete($this->input->get("id"));
 $data["redirect"]="site/viewclients";
 $this->load->view("redirect",$data);
+}
+public function viewproductimage()
+{
+$access=array("1");
+$this->checkaccess($access);
+$data["page"]="viewproductimage";
+$data["page2"]="block/productblock";
+$data["before1"]=$this->input->get('id');
+$data["before2"]=$this->input->get('id');
+$data["base_url"]=site_url("site/viewproductimagejson?id=").$this->input->get('id');
+$data["title"]="View productimage";
+$this->load->view("templatewith2",$data);
+}
+function viewproductimagejson()
+{
+$id=$this->input->get('id');
+$elements=array();
+$elements[0]=new stdClass();
+$elements[0]->field="`projectimage`.`id`";
+$elements[0]->sort="1";
+$elements[0]->header="ID";
+$elements[0]->alias="id";
+$elements[1]=new stdClass();
+$elements[1]->field="`projectimage`.`order`";
+$elements[1]->sort="1";
+$elements[1]->header="Order";
+$elements[1]->alias="order";
+// $elements[2]=new stdClass();
+// $elements[2]->field="`status`";
+// $elements[2]->sort="1";
+// $elements[2]->header="status";
+// $elements[2]->alias="status";
+
+$elements[3]=new stdClass();
+$elements[3]->field="`projectimage`.`image`";
+$elements[3]->sort="1";
+$elements[3]->header="image";
+$elements[3]->alias="image";
+
+$elements[4]=new stdClass();
+$elements[4]->field="`projectimage`.`project`";
+$elements[4]->sort="1";
+$elements[4]->header="productid";
+$elements[4]->alias="productid";
+$search=$this->input->get_post("search");
+$pageno=$this->input->get_post("pageno");
+$orderby=$this->input->get_post("orderby");
+$orderorder=$this->input->get_post("orderorder");
+$maxrow=$this->input->get_post("maxrow");
+if($maxrow=="")
+{
+$maxrow=20;
+}
+if($orderby=="")
+{
+$orderby="id";
+$orderorder="ASC";
+}
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `projectimage` LEFT OUTER JOIN `rdbackend_project` ON `rdbackend_project`.`id`=`projectimage`.`project`","WHERE `projectimage`.`project`='$id'");
+$this->load->view("json",$data);
+}
+
+public function createproductimage()
+{
+$access=array("1");
+$this->checkaccess($access);
+$data["page"]="createproductimage";
+$data["page2"]="block/productblock";
+$data["before1"]=$this->input->get("id");
+$data["before2"]=$this->input->get("id");
+$data['product']=$this->project_model->getdropdown();
+$data["title"]="Create productimage";
+$this->load->view("templatewith2",$data);
+}
+public function createproductimagesubmit()
+{
+$access=array("1");
+$this->checkaccess($access);
+$this->form_validation->set_rules("product","Product","trim");
+$this->form_validation->set_rules("order","Order","trim");
+$this->form_validation->set_rules("image","Image","trim");
+$this->form_validation->set_rules("status","Status","trim");
+if($this->form_validation->run()==FALSE)
+{
+$data["alerterror"]=validation_errors();
+
+$data["page"]="createproductimage";
+$data['design']=$this->designs_model->getdesignsdropdown();
+$data[ 'status' ] =$this->user_model->getstatusdropdown();
+$data['relatedproduct']=$this->product_model->getproductdropdown();
+$data['product']=$this->product_model->getproductdropdown();
+$data["title"]="Create productimage";
+$this->load->view("template",$data);
+}
+else
+{
+    $product=$this->input->get_post("product");
+    $order=$this->input->get_post("order");
+    $status=$this->input->get_post("status");
+ $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+
+                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+                $config_r['maintain_ratio'] = TRUE;
+                $config_t['create_thumb'] = FALSE;///add this
+                // $config_r['width']   = 800;
+                // $config_r['height'] = 800;
+                $config_r['quality']    = 100;
+                //end of configs
+                $this->load->library('image_lib', $config_r);
+                $this->image_lib->initialize($config_r);
+                if(!$this->image_lib->resize())
+                {
+                    echo "Failed." . $this->image_lib->display_errors();
+                    //return false;
+                }
+                else
+                {
+                    //print_r($this->image_lib->dest_image);
+                    //dest_image
+                    $image=$this->image_lib->dest_image;
+                    //return false;
+                }
+
+			}
+
+if($this->productimage_model->create($product,$order,$status,$image)==0)
+$data["alerterror"]="New productimage could not be created.";
+else
+$data["alertsuccess"]="productimage created Successfully.";
+$data["redirect"]="site/viewproductimage?id=".$product;
+$this->load->view("redirect2",$data);
+}
+}
+public function editproductimage()
+{
+$access=array("1");
+$this->checkaccess($access);
+// $data['relatedproduct']=$this->product_model->getproductdropdown();
+$data['product']=$this->project_model->getdropdown();
+    // $data[ 'status' ] =$this->user_model->getstatusdropdown();
+$data["page"]="editproductimage";
+$data["page2"]="block/productblock";
+$data["before1"]=$this->input->get("id");
+$data["before2"]=$this->input->get("id");
+// $data['design']=$this->designs_model->getdesignsdropdown();
+$data["title"]="Edit productimage";
+$data["before"]=$this->productimage_model->beforeedit($this->input->get("id"));
+$this->load->view("templatewith2",$data);
+}
+public function editproductimagesubmit()
+{
+$access=array("1");
+$this->checkaccess($access);
+$this->form_validation->set_rules("id","ID","trim");
+$this->form_validation->set_rules("product","Product","trim");
+$this->form_validation->set_rules("order","Order","trim");
+$this->form_validation->set_rules("image","Image","trim");
+$this->form_validation->set_rules("status","Status","trim");
+if($this->form_validation->run()==FALSE)
+{
+$data["alerterror"]=validation_errors();
+$data["page"]="editproductimage";
+$data[ 'status' ] =$this->user_model->getstatusdropdown();
+$data['product']=$this->product_model->getproductdropdown();
+    $data['design']=$this->designs_model->getdesignsdropdown();
+$data['relatedproduct']=$this->product_model->getproductdropdown();
+$data["title"]="Edit productimage";
+$data["before"]=$this->productimage_model->beforeedit($this->input->get("id"));
+$this->load->view("template",$data);
+}
+else
+{
+$id=$this->input->get_post("id");
+  $product=$this->input->get_post("product");
+    $order=$this->input->get_post("order");
+    $status=$this->input->get_post("status");
+ $config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpg|png|jpeg';
+			$this->load->library('upload', $config);
+			$filename="image";
+			$image="";
+			if (  $this->upload->do_upload($filename))
+			{
+				$uploaddata = $this->upload->data();
+				$image=$uploaddata['file_name'];
+
+                $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+                $config_r['maintain_ratio'] = TRUE;
+                $config_t['create_thumb'] = FALSE;///add this
+                // $config_r['width']   = 800;
+                // $config_r['height'] = 800;
+                $config_r['quality']    = 100;
+                //end of configs
+
+                $this->load->library('image_lib', $config_r);
+                $this->image_lib->initialize($config_r);
+                if(!$this->image_lib->resize())
+                {
+                    echo "Failed." . $this->image_lib->display_errors();
+                    //return false;
+                }
+                else
+                {
+                    //print_r($this->image_lib->dest_image);
+                    //dest_image
+                    $image=$this->image_lib->dest_image;
+                    //return false;
+                }
+
+			}
+
+            if($image=="")
+            {
+            $image=$this->productimage_model->getImageById($id);
+               // print_r($image);
+                $image=$image->image;
+            }
+
+if($this->productimage_model->edit($id,$product,$order,$status,$image)==0)
+$data["alerterror"]="New productimage could not be Updated.";
+else
+$data["alertsuccess"]="productimage Updated Successfully.";
+$data["redirect"]="site/viewproductimage?id=".$product;
+$this->load->view("redirect2",$data);
+}
+}
+public function deleteproductimage()
+{
+$access=array("1");
+$this->checkaccess($access);
+$this->productimage_model->delete($this->input->get("id"));
+$data["redirect"]="site/viewproductimage?id=".$this->input->get("productid");
+$this->load->view("redirect2",$data);
 }
 
 }

@@ -42,10 +42,10 @@ return $query;
 // $query=$this->db->query("SELECT `image` FROM `rdbackend_services` WHERE `id`='$id'")->row();
 // return $query;
 // }
-public function getdropdown()
+public function getservicesdropdown()
 {
 $query=$this->db->query("SELECT * FROM `rdbackend_services` ORDER BY `id`
-                    ASC")->row();
+                    ASC")->result();
 $return=array(
 "" => "Select Option"
 );
