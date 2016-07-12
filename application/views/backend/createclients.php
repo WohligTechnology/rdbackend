@@ -20,7 +20,7 @@
 </div>
 </div>
 <span style=" display: block;
-padding-top: 30px;"></span>
+">150px X 120px</span>
 </div>
 <div class="row">
 <div class="input-field col s6">

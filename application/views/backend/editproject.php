@@ -9,7 +9,7 @@
 
 <div class="row">
            <div class="input-field col s12 m8">
-               <?php echo form_dropdown('sector', $sector, set_value('sector',$before->service)); ?>
+               <?php echo form_dropdown('sector', $sector, set_value('sector',$before->sector)); ?>
                 <label>service</label>
            </div>
        </div>
@@ -37,12 +37,12 @@
    <span style=" display: block;
  ">700px X 450px</span>
  </div> -->
-<div class="row">
+<!-- <div class="row">
 <div class="col s12 m6">
 <label>description</label>
 <textarea id="some-textarea" name="description" placeholder="Enter text ..."><?php echo set_value( 'description',$before->description);?></textarea>
 </div>
-</div>
+</div> -->
 <div class="row">
 <div class="input-field col s6">
 <label for="order">order</label>

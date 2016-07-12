@@ -28,12 +28,12 @@
 <span style=" display: block;
 padding-top: 30px;"></span>
 </div> -->
-<div class="row"><label>description</label>
+<!-- <div class="row"><label>description</label>
 <div class="input-field col s12">
 <textarea id="some-textarea" name="description" class="materialize-textarea" length="400"><?php echo set_value( 'description');?></textarea>
 
 </div>
-</div>
+</div> -->
 <div class="row">
 <div class="input-field col s6">
 <label for="order">order</label>
