@@ -5,11 +5,41 @@
 <form class='col s12' method='post' action='<?php echo site_url("site/createsectorsubmit");?>' enctype= 'multipart/form-data'>
 <div class="row">
 <div class="input-field col s6">
-<label for="name">name</label>
+<label for="name">Name</label>
 <input type="text" id="name" name="name" value='<?php echo set_value('name');?>'>
 </div>
 </div>
-<div class="row">  <label>description</label>
+<div class="row">
+<div class="input-field col s6">
+<label for="name">Order</label>
+<input type="text" id="order" order="order" value='<?php echo set_value('order');?>'>
+</div>
+</div>
+<div class="row">
+<div class="file-field input-field col s12 m6">
+<div class="btn blue darken-4">
+<span>Image1</span>
+<input type="file" name="image1" multiple>
+</div>
+<div class="file-path-wrapper">
+<input class="file-path validate" type="text" placeholder="Upload one or more files" value='<?php echo set_value('image1');?>'>
+</div>
+</div>
+<span style=" display: block;">428px X 330px</span>
+</div>
+<div class="row">
+<div class="file-field input-field col s12 m6">
+<div class="btn blue darken-4">
+<span>Image2</span>
+<input type="file" name="image2">
+</div>
+<div class="file-path-wrapper">
+<input class="file-path validate" type="text" placeholder="Upload one or more files" value='<?php echo set_value('image2');?>'>
+</div>
+</div>
+<span style=" display: block;">1920px X 595px</span>
+</div>
+<div class="row">  <label>Description</label>
 <div class="input-field col s12">
 
 <textarea id= "some-textarea" name="description" class="materialize-textarea" length="400"><?php echo set_value( 'description');?></textarea>

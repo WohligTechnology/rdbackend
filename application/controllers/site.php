@@ -628,8 +628,24 @@ else
 {
 $id=$this->input->get_post("id");
 $name=$this->input->get_post("name");
+$order=$this->input->get_post("order");
 $description=$this->input->get_post("description");
-if($this->sector_model->create($name,$description)==0)
+$config['upload_path'] = './uploads/';
+				$config['allowed_types'] = 'gif|jpg|png';
+				$this->load->library('upload', $config);
+				$filename = 'image1';
+				$image1 = '';
+				if ($this->upload->do_upload($filename)) {
+						$uploaddata = $this->upload->data();
+						$image1 = $uploaddata['file_name'];
+				}
+				$filename = 'image2';
+				$image2 = '';
+				if ($this->upload->do_upload($filename)) {
+						$uploaddata = $this->upload->data();
+						$image2 = $uploaddata['file_name'];
+				}
+if($this->sector_model->create($name,$description,$image1,$image2,$order)==0)
 $data["alerterror"]="New sector could not be created.";
 else
 $data["alertsuccess"]="sector created Successfully.";
@@ -666,7 +682,34 @@ else
 $id=$this->input->get_post("id");
 $name=$this->input->get_post("name");
 $description=$this->input->get_post("description");
-if($this->sector_model->edit($id,$name,$description)==0)
+$order=$this->input->get_post("order");
+$config['upload_path'] = './uploads/';
+            $config['allowed_types'] = 'gif|jpg|png';
+            $this->load->library('upload', $config);
+            $filename = 'image1';
+            $image1 = '';
+            if ($this->upload->do_upload($filename)) {
+                $uploaddata = $this->upload->data();
+                $image1 = $uploaddata['file_name'];
+            }
+            if ($image1 == '') {
+                $image1 = $this->sector_model->getimage1byid($id);
+                    // print_r($image);
+                     $image1 = $image1->image1;
+            }
+            $filename = 'image2';
+            $image2 = '';
+            if ($this->upload->do_upload($filename)) {
+                $uploaddata = $this->upload->data();
+                $image2 = $uploaddata['file_name'];
+            }
+            if ($image2 == '') {
+                $image2 = $this->sector_model->getimage2byid($id);
+                    // print_r($image);
+                     $image2 = $image2->image2;
+            }
+
+if($this->sector_model->edit($id,$name,$description,$image1,$image2,$order)==0)
 $data["alerterror"]="New sector could not be Updated.";
 else
 $data["alertsuccess"]="sector Updated Successfully.";
@@ -966,7 +1009,7 @@ if($orderby=="")
 $orderby="id";
 $orderorder="ASC";
 }
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `rdbackend_services` INNER JOIN `rdbackend_sector` ON `rdbackend_services`.`sector`=`rdbackend_sector`.`id`");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `rdbackend_services` LEFT OUTER JOIN `rdbackend_sector` ON `rdbackend_services`.`sector`=`rdbackend_sector`.`id`");
 $this->load->view("json",$data);
 }
 
