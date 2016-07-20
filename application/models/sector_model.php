@@ -92,4 +92,3 @@ public function getSector($id)
 return $query;
 }
 }
-?>

@@ -246,4 +246,4 @@ public function getSector()
   $this->load->view("json",$data);
 }
 
-} ?>
+}

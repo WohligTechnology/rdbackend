@@ -1562,4 +1562,3 @@ $this->load->view("redirect2",$data);
 }
 
 }
-?>

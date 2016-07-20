@@ -43,4 +43,3 @@ return $query;
         return $query;
     }
 }
-?>
