@@ -13,6 +13,18 @@
 </div>
 </div>
 <div class="row">
+<div class="input-field col s6">
+<label for="name">Order</label>
+<input type="text" id="order" name="order" value='<?php echo set_value('order',$before->order);?>'>
+</div>
+</div>
+<div class=" row">
+<div class=" input-field col s6">
+<?php echo form_dropdown("type",$type,set_value('type',$before->type));?>
+<label>Image Type</label>
+</div>
+</div>
+<div class="row">
 			<div class="file-field input-field col m6 s12">
 				<span class="img-center big image1">
                    			<?php if ($before->image1 == '') {
@@ -30,7 +42,8 @@
 				</div>
 <!--				<div class="md4"><a class="waves-effect waves-light btn red clearimg input-field ">Clear Image</a></div>-->
 			</div>
-<span style=" display: block;">428px X 330px</span>
+			<span style=" display: block;">Small 428px X 330px</span>
+			<span style=" display: block;"> OR Big 428px X 660px</span>
 		</div>
     <div class="row">
 			<div class="file-field input-field col m6 s12">
@@ -58,6 +71,7 @@
 <textarea id= "some-textarea" name="description" placeholder="Enter text ..."><?php echo set_value( 'description',$before->description);?></textarea>
 </div>
 </div>
+
 <div class="row">
 <div class="col s6">
 <button type="submit" class="btn btn-primary waves-effect waves-light  blue darken-4">Save</button>

@@ -3,9 +3,9 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class sector_model extends CI_Model
 {
-public function create($name,$description,$image1,$image2,$order)
+public function create($name,$description,$image1,$image2,$order,$type)
 {
-$data=array("name" => $name,"description" => $description,"image1" => $image1,"image2" => $image2,"order" => $order);
+$data=array("name" => $name,"description" => $description,"image1" => $image1,"image2" => $image2,"order" => $order,"type" => $type);
 $query=$this->db->insert( "rdbackend_sector", $data );
 $id=$this->db->insert_id();
 if(!$query)
@@ -37,9 +37,9 @@ return $query;
 }
 
 
-public function edit($id,$name,$description,$image1,$image2,$order)
+public function edit($id,$name,$description,$image1,$image2,$order,$type)
 {
-$data=array("name" => $name,"description" => $description,"order" => $order);
+$data=array("name" => $name,"description" => $description,"order" => $order,"type" => $type);
 if($image1 != "")
   $data['image1']=$image1;
 if($image2 != "")
@@ -74,7 +74,7 @@ return $return;
 
 public function getAllSectors()
 {
-  $query = $this->db->query("SELECT `id`, `name`, `description`, `image1`, `image2`, `order` FROM `rdbackend_sector` WHERE 1 ORDER BY `order`")->result();
+  $query = $this->db->query("SELECT `id`, `name`, `description`, `image1`, `image2`, `order`,`type` FROM `rdbackend_sector` WHERE 1 ORDER BY `order`")->result();
   return $query;
 }
 public function getSector($id)
@@ -90,5 +90,17 @@ public function getSector($id)
     }
   }
 return $query;
+}
+
+public function getsectortypedropdown()
+{
+
+$return=array(
+"" => "Select type",
+"1" => "Small Image",
+"2" => "Big Image"
+);
+
+return $return;
 }
 }

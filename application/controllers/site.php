@@ -608,6 +608,7 @@ public function createsector()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createsector";
+$data['type']=$this->sector_model->getsectortypedropdown();
 $data["title"]="Create sector";
 $this->load->view("template",$data);
 }
@@ -628,6 +629,7 @@ else
 {
 $id=$this->input->get_post("id");
 $name=$this->input->get_post("name");
+$type=$this->input->get_post("type");
 $order=$this->input->get_post("order");
 $description=$this->input->get_post("description");
 $config['upload_path'] = './uploads/';
@@ -645,7 +647,7 @@ $config['upload_path'] = './uploads/';
 						$uploaddata = $this->upload->data();
 						$image2 = $uploaddata['file_name'];
 				}
-if($this->sector_model->create($name,$description,$image1,$image2,$order)==0)
+if($this->sector_model->create($name,$description,$image1,$image2,$order,$type)==0)
 $data["alerterror"]="New sector could not be created.";
 else
 $data["alertsuccess"]="sector created Successfully.";
@@ -659,6 +661,7 @@ $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editsector";
 $data["title"]="Edit sector";
+$data['type']=$this->sector_model->getsectortypedropdown();
 $data["before"]=$this->sector_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
 }
@@ -681,6 +684,7 @@ else
 {
 $id=$this->input->get_post("id");
 $name=$this->input->get_post("name");
+$type=$this->input->get_post("type");
 $description=$this->input->get_post("description");
 $order=$this->input->get_post("order");
 $config['upload_path'] = './uploads/';
@@ -709,7 +713,7 @@ $config['upload_path'] = './uploads/';
                      $image2 = $image2->image2;
             }
 
-if($this->sector_model->edit($id,$name,$description,$image1,$image2,$order)==0)
+if($this->sector_model->edit($id,$name,$description,$image1,$image2,$order,$type)==0)
 $data["alerterror"]="New sector could not be Updated.";
 else
 $data["alertsuccess"]="sector Updated Successfully.";
