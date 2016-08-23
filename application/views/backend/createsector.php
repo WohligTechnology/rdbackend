@@ -28,7 +28,7 @@
 <input type="file" name="image1" multiple>
 </div>
 <div class="file-path-wrapper">
-<input class="file-path validate" type="text" placeholder="Upload one or more files" value='<?php echo set_value('image1');?>'>
+<input class="file-path validate" type="text" placeholder="Upload image" value='<?php echo set_value('image1');?>'>
 </div>
 </div>
 <span style=" display: block;">Small 428px X 330px</span>
@@ -41,7 +41,7 @@
 <input type="file" name="image2">
 </div>
 <div class="file-path-wrapper">
-<input class="file-path validate" type="text" placeholder="Upload one or more files" value='<?php echo set_value('image2');?>'>
+<input class="file-path validate" type="text" placeholder="Upload image" value='<?php echo set_value('image2');?>'>
 </div>
 </div>
 <span style=" display: block;">1920px X 595px</span>

@@ -17,7 +17,7 @@
 <input type="file" name="image" multiple>
 </div>
 <div class="file-path-wrapper">
-<input class="file-path validate" type="text" placeholder="Upload one or more files" value='<?php echo set_value('image');?>'>
+<input class="file-path validate" type="text" placeholder="Upload image" value='<?php echo set_value('image');?>'>
 </div>
 </div>
 <span style=" display: block;

@@ -38,7 +38,7 @@
 					<input name="image1" type="file" multiple>
 				</div>
 				<div class="file-path-wrapper">
-					<input class="file-path validate image11" type="text" placeholder="Upload one or more files" value="<?php echo set_value('image1', $before->image1);?>">
+					<input class="file-path validate image11" type="text" placeholder="Upload image" value="<?php echo set_value('image1', $before->image1);?>">
 				</div>
 <!--				<div class="md4"><a class="waves-effect waves-light btn red clearimg input-field ">Clear Image</a></div>-->
 			</div>
@@ -59,7 +59,7 @@
 					<input name="image2" type="file" multiple>
 				</div>
 				<div class="file-path-wrapper">
-					<input class="file-path validate image21" type="text" placeholder="Upload one or more files" value="<?php echo set_value('image2', $before->image2);?>">
+					<input class="file-path validate image21" type="text" placeholder="Upload image" value="<?php echo set_value('image2', $before->image2);?>">
 				</div>
 <!--				<div class="md4"><a class="waves-effect waves-light btn red clearimg input-field ">Clear Image</a></div>-->
 			</div>
