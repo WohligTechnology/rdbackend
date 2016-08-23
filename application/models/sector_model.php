@@ -82,13 +82,15 @@ public function getSector($id)
   $query = $this->db->query("SELECT `id`, `name`, `description`, `image1`, `image2`, `order` FROM `rdbackend_sector` WHERE `id`=$id")->row();
 
   $query->services = $this->db->query("SELECT `id`, `name`, `description`, `order`, `sector` FROM `rdbackend_services` WHERE `sector`=$id ORDER BY `order` ASC")->result();
-  foreach ($query->services as $services) {
-    // echo $services->id;
-    $services->project = $this->db->query("SELECT `id`, `title`, `image`, `description`, `order`, `services` FROM `rdbackend_project` WHERE `services`=$services->id ORDER BY `order` ASC")->result();
-    foreach ($services->project as $project) {
-    $project->images = $this->db->query("SELECT `id`, `project`, `image`, `order` FROM `projectimage` WHERE `project`=$project->id ORDER BY `order` ASC")->result();
-    }
-  }
+  // foreach ($query->services as $services) {
+  //   // echo $services->id;
+  //   $services->project = $this->db->query("SELECT `id`, `title`, `image`, `description`, `order`, `services` FROM `rdbackend_project` WHERE `services`=$services->id ORDER BY `order` ASC")->result();
+  //   foreach ($services->project as $project) {
+  //   $project->images = $this->db->query("SELECT `id`, `project`, `image`, `order` FROM `projectimage` WHERE `project`=$project->id ORDER BY `order` ASC")->result();
+  //   }
+  // }
+
+  $query->images = $this->db->query("SELECT `id`, `sector`, `image`, `order` FROM `rdbackend_gallery` WHERE `sector`=$id ORDER BY `order` ASC")->result();
 return $query;
 }
 

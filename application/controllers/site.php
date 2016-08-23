@@ -869,14 +869,14 @@ public function editproject()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editproject";
-$data["page2"]="block/productblock";
+// $data["page2"]="block/productblock";
 $data["before1"]=$this->input->get('id');
 $data["before2"]=$this->input->get('id');
 $data['sector']=$this->services_model->getservicesdropdown();
 $data["title"]="Edit project";
 $data["before"]=$this->project_model->beforeedit($this->input->get("id"));
-// $this->load->view("template",$data);
-$this->load->view("templatewith2",$data);
+$this->load->view("template",$data);
+// $this->load->view("templatewith2",$data);
 
 }
 public function editprojectsubmit()
@@ -1563,6 +1563,220 @@ $this->checkaccess($access);
 $this->productimage_model->delete($this->input->get("id"));
 $data["redirect"]="site/viewproductimage?id=".$this->input->get("productid");
 $this->load->view("redirect2",$data);
+}
+
+public function viewgallery()
+{
+$access=array("1");
+$this->checkaccess($access);
+$data["page"]="viewgallery";
+$data["base_url"]=site_url("site/viewgalleryjson");
+$data["title"]="View gallery";
+$this->load->view("template",$data);
+}
+function viewgalleryjson()
+{
+$elements=array();
+$elements[0]=new stdClass();
+$elements[0]->field="`rdbackend_gallery`.`id`";
+$elements[0]->sort="1";
+$elements[0]->header="id";
+$elements[0]->alias="id";
+$elements[1]=new stdClass();
+$elements[1]->field="`rdbackend_gallery`.`image`";
+$elements[1]->sort="1";
+$elements[1]->header="image";
+$elements[1]->alias="image";
+$elements[2]=new stdClass();
+$elements[2]->field="`rdbackend_gallery`.`order`";
+$elements[2]->sort="1";
+$elements[2]->header="order";
+$elements[2]->alias="order";
+$elements[3]=new stdClass();
+$elements[3]->field="`rdbackend_sector`.`name`";
+$elements[3]->sort="1";
+$elements[3]->header="sectorname";
+$elements[3]->alias="sectorname";
+$search=$this->input->get_post("search");
+$pageno=$this->input->get_post("pageno");
+$orderby=$this->input->get_post("orderby");
+$orderorder=$this->input->get_post("orderorder");
+$maxrow=$this->input->get_post("maxrow");
+if($maxrow=="")
+{
+$maxrow=20;
+}
+if($orderby=="")
+{
+$orderby="id";
+$orderorder="ASC";
+}
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `rdbackend_gallery` LEFT OUTER JOIN `rdbackend_sector` ON `rdbackend_gallery`.`sector`=`rdbackend_sector`.`id`");
+$this->load->view("json",$data);
+}
+
+public function creategallery()
+{
+$access=array("1");
+$this->checkaccess($access);
+$data["page"]="creategallery";
+$data['sector']=$this->sector_model->getsectordropdown();
+$data["title"]="Create gallery";
+$this->load->view("template",$data);
+}
+public function creategallerysubmit()
+{
+$access=array("1");
+$this->checkaccess($access);
+$this->form_validation->set_rules("title","title","trim");
+$this->form_validation->set_rules("image","image","trim");
+$this->form_validation->set_rules("order","order","trim");
+if($this->form_validation->run()==FALSE)
+{
+$data["alerterror"]=validation_errors();
+$data["page"]="creategallery";
+$data["title"]="Create gallery";
+$this->load->view("template",$data);
+}
+else
+{
+$id=$this->input->get_post("id");
+// $image=$this->input->get_post("image");
+$order=$this->input->get_post("order");
+$sector=$this->input->get_post("sector");
+$config['upload_path'] = './uploads/';
+		 $config['allowed_types'] = 'gif|jpg|png|jpeg';
+		 $this->load->library('upload', $config);
+		 $filename="image";
+		 $image="";
+		 if (  $this->upload->do_upload($filename))
+		 {
+			 $uploaddata = $this->upload->data();
+			 $image=$uploaddata['file_name'];
+							 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+							 $config_r['maintain_ratio'] = TRUE;
+							 $config_t['create_thumb'] = FALSE;///add this
+							 // $config_r['width']   = 800;
+							 // $config_r['height'] = 800;
+							 $config_r['quality']    = 100;
+							 //end of configs
+							 $this->load->library('image_lib', $config_r);
+							 $this->image_lib->initialize($config_r);
+							 if(!$this->image_lib->resize())
+							 {
+									 echo "Failed." . $this->image_lib->display_errors();
+									 //return false;
+							 }
+							 else
+							 {
+									 //print_r($this->image_lib->dest_image);
+									 //dest_image
+									 $image=$this->image_lib->dest_image;
+									 //return false;
+							 }
+		 }
+if($this->gallery_model->create($sector,$image,$order)==0)
+$data["alerterror"]="New gallery could not be created.";
+else
+$data["alertsuccess"]="gallery created Successfully.";
+$data["redirect"]="site/viewgallery";
+$this->load->view("redirect",$data);
+}
+}
+public function editgallery()
+{
+$access=array("1");
+$this->checkaccess($access);
+$data["page"]="editgallery";
+// $data["page2"]="block/productblock";
+$data["before1"]=$this->input->get('id');
+$data["before2"]=$this->input->get('id');
+$data['sector']=$this->sector_model->getsectordropdown();
+$data["title"]="Edit gallery";
+$data["before"]=$this->gallery_model->beforeedit($this->input->get("id"));
+$this->load->view("template",$data);
+// $this->load->view("templatewith2",$data);
+
+}
+public function editgallerysubmit()
+{
+$access=array("1");
+$this->checkaccess($access);
+$this->form_validation->set_rules("id","id","trim");
+$this->form_validation->set_rules("title","title","trim");
+$this->form_validation->set_rules("image","image","trim");
+$this->form_validation->set_rules("description","description","trim");
+$this->form_validation->set_rules("order","order","trim");
+$this->form_validation->set_rules("sector","sector","trim");
+if($this->form_validation->run()==FALSE)
+{
+$data["alerterror"]=validation_errors();
+$data["page"]="editgallery";
+$data["title"]="Edit gallery";
+$data["before"]=$this->gallery_model->beforeedit($this->input->get("id"));
+$this->load->view("template",$data);
+}
+else
+{
+$id=$this->input->get_post("id");
+$order=$this->input->get_post("order");
+$sector=$this->input->get_post("sector");
+$config['upload_path'] = './uploads/';
+		 $config['allowed_types'] = 'gif|jpg|png|jpeg';
+		 $this->load->library('upload', $config);
+		 $filename="image";
+		 $image="";
+		 if (  $this->upload->do_upload($filename))
+		 {
+			 $uploaddata = $this->upload->data();
+			 $image=$uploaddata['file_name'];
+
+							 $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+							 $config_r['maintain_ratio'] = TRUE;
+							 $config_t['create_thumb'] = FALSE;///add this
+							 // $config_r['width']   = 800;
+							 // $config_r['height'] = 800;
+							 $config_r['quality']    = 100;
+							 //end of configs
+
+							 $this->load->library('image_lib', $config_r);
+							 $this->image_lib->initialize($config_r);
+							 if(!$this->image_lib->resize())
+							 {
+									 echo "Failed." . $this->image_lib->display_errors();
+									 //return false;
+							 }
+							 else
+							 {
+									 //print_r($this->image_lib->dest_image);
+									 //dest_image
+									 $image=$this->image_lib->dest_image;
+									 //return false;
+							 }
+
+		 }
+
+					 if($image=="")
+					 {
+					 $image=$this->gallery_model->getimagebyid($id);
+							// print_r($image);
+							 $image=$image->logo;
+					 }
+if($this->gallery_model->edit($id,$sector,$image,$order)==0)
+$data["alerterror"]="New gallery could not be Updated.";
+else
+$data["alertsuccess"]="gallery Updated Successfully.";
+$data["redirect"]="site/viewgallery";
+$this->load->view("redirect",$data);
+}
+}
+public function deletegallery()
+{
+$access=array("1");
+$this->checkaccess($access);
+$this->gallery_model->delete($this->input->get("id"));
+$data["redirect"]="site/viewgallery";
+$this->load->view("redirect",$data);
 }
 
 }
