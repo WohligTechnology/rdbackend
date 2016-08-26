@@ -245,5 +245,10 @@ public function getSector()
   $data["message"]=$this->sector_model->getSector($id);
   $this->load->view("json",$data);
 }
+public function getAllSlider()
+{
+    $data['message']=$this->slider_model->getAllSlider();
+    $this->load->view("json",$data);
+}
 
 }
