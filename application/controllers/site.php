@@ -1871,25 +1871,25 @@ public function viewslider()
 			$uploaddata = $this->upload->data();
 			$image=$uploaddata['file_name'];
 
-							$config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
-							$config_r['maintain_ratio'] = TRUE;
-							$config_t['create_thumb'] = FALSE;///add this
-							//end of configs
+							// $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
+							// $config_r['maintain_ratio'] = TRUE;
+							// $config_t['create_thumb'] = FALSE;///add this
+							// //end of configs
 
-							$this->load->library('image_lib', $config_r);
-							$this->image_lib->initialize($config_r);
-							if(!$this->image_lib->resize())
-							{
-									echo "Failed." . $this->image_lib->display_errors();
-									//return false;
-							}
-							else
-							{
-									//print_r($this->image_lib->dest_image);
-									//dest_image
-									$image=$this->image_lib->dest_image;
-									//return false;
-							}
+							// $this->load->library('image_lib', $config_r);
+							// $this->image_lib->initialize($config_r);
+							// if(!$this->image_lib->resize())
+							// {
+							// 		echo "Failed." . $this->image_lib->display_errors();
+							// 		//return false;
+							// }
+							// else
+							// {
+							// 		//print_r($this->image_lib->dest_image);
+							// 		//dest_image
+							// 		$image=$this->image_lib->dest_image;
+							// 		//return false;
+							// }
 
 		}
 					if($this->slider_model->create($order,$image)==0)
