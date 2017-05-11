@@ -1862,36 +1862,16 @@ public function viewslider()
 					$order=$this->input->get_post("order");
 					// $image=$this->input->get_post("image");
 					$config['upload_path'] = './uploads/';
-		$config['allowed_types'] = 'gif|jpg|png|jpeg';
-		$this->load->library('upload', $config);
-		$filename="image";
-		$image="";
-		if (  $this->upload->do_upload($filename))
-		{
-			$uploaddata = $this->upload->data();
-			$image=$uploaddata['file_name'];
-
-							// $config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
-							// $config_r['maintain_ratio'] = TRUE;
-							// $config_t['create_thumb'] = FALSE;///add this
-							// //end of configs
-
-							// $this->load->library('image_lib', $config_r);
-							// $this->image_lib->initialize($config_r);
-							// if(!$this->image_lib->resize())
-							// {
-							// 		echo "Failed." . $this->image_lib->display_errors();
-							// 		//return false;
-							// }
-							// else
-							// {
-							// 		//print_r($this->image_lib->dest_image);
-							// 		//dest_image
-							// 		$image=$this->image_lib->dest_image;
-							// 		//return false;
-							// }
-
-		}
+                    $config['allowed_types'] = 'gif|jpg|png|jpeg';
+                    $this->load->library('upload', $config);
+                    $filename="image";
+                    $image="";
+                    if (  $this->upload->do_upload($filename))
+                    {
+                        $uploaddata = $this->upload->data();
+                        $image=$uploaddata['file_name'];
+                    }
+                
 					if($this->slider_model->create($order,$image)==0)
 					$data["alerterror"]="New slider could not be created.";
 					else
@@ -1931,36 +1911,15 @@ public function viewslider()
 					$order=$this->input->get_post("order");
 					// $image=$this->input->get_post("image");
 					$config['upload_path'] = './uploads/';
-		$config['allowed_types'] = 'gif|jpg|png|jpeg';
-		$this->load->library('upload', $config);
-		$filename="image";
-		$image="";
-		if (  $this->upload->do_upload($filename))
-		{
-			$uploaddata = $this->upload->data();
-			$image=$uploaddata['file_name'];
-
-							$config_r['source_image']   = './uploads/' . $uploaddata['file_name'];
-							$config_r['maintain_ratio'] = TRUE;
-							$config_t['create_thumb'] = FALSE;///add this
-							//end of configs
-
-							$this->load->library('image_lib', $config_r);
-							$this->image_lib->initialize($config_r);
-							if(!$this->image_lib->resize())
-							{
-									echo "Failed." . $this->image_lib->display_errors();
-									//return false;
-							}
-							else
-							{
-									//print_r($this->image_lib->dest_image);
-									//dest_image
-									$image=$this->image_lib->dest_image;
-									//return false;
-							}
-
-		}
+                    $config['allowed_types'] = 'gif|jpg|png|jpeg';
+                    $this->load->library('upload', $config);
+                    $filename="image";
+                    $image="";
+                    if (  $this->upload->do_upload($filename))
+                    {
+                        $uploaddata = $this->upload->data();
+                        $image=$uploaddata['file_name'];
+                    }
 
 					if($image=="")
 					{
